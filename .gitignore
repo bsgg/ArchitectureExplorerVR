@@ -82,3 +82,6 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 ArchitectureVR/DerivedDataCache/*
 DerivedDataCache/*
+
+
+ArchitectureVR/Content/ArchVizAssets/*
