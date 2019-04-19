@@ -33,5 +33,7 @@ private:
 private:
 
 	class UCameraComponent* Camera;
+	class USceneComponent* VRRoot;
 
 };
+

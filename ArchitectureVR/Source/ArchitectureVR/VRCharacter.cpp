@@ -7,12 +7,13 @@
 // Sets default values
 AVRCharacter::AVRCharacter()
 {
+	VRRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	VRRoot->SetupAttachment(GetRootComponent());
+
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	Camera->SetupAttachment(GetRootComponent());
+	Camera->SetupAttachment(VRRoot);
+ 	
 
-	
-
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -29,6 +30,13 @@ void AVRCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// Offset from last frame and this frame
+	FVector NeCameraOffset = Camera->GetComponentLocation() - GetActorLocation();
+	NeCameraOffset.Z = 0;
+
+	AddActorWorldOffset(NeCameraOffset);
+
+	VRRoot->AddWorldOffset(-NeCameraOffset);
 }
 
 // Called to bind functionality to input
