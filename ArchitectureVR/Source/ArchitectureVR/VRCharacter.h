@@ -33,7 +33,10 @@ private:
 	void BeginTeleport();
 	void FinishTeleport();
 
+	bool FindTeleportDestination(FVector &OutLocation);
 	void UpdateDestinationMarker();
+	
+	void StartFade(float FromAlpha, float ToAlpha);
 
 private:
 
@@ -52,6 +55,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float TeleportFadeTime = 1;
+
+	UPROPERTY(EditAnywhere)
+	FVector TeleportProjectionExtent = FVector(100, 100, 100);
 
 };
 
