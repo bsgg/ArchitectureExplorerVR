@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
 #include "VRCharacter.generated.h"
 
 UCLASS()
@@ -31,10 +32,11 @@ private:
 	void MoveRight(float throttle);
 	
 	void BeginTeleport();
-	void FinishTeleport();
+	void FinishTeleport();	
 
 	bool FindTeleportDestination(FVector &OutLocation);
 	void UpdateDestinationMarker();
+	void UpdateBlinkers();
 	
 	void StartFade(float FromAlpha, float ToAlpha);
 
@@ -67,6 +69,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	class UMaterialInterface * BlinkerMaterialBase;
+
+	UPROPERTY(EditAnywhere)
+	class UCurveFloat* RadiusVsVelocity;
 
 };
 
