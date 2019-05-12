@@ -34,9 +34,11 @@ private:
 	void BeginTeleport();
 	void FinishTeleport();	
 
-	bool FindTeleportDestination(FVector &OutLocation);
+	bool FindTeleportDestination(TArray<FVector> &OutPath, FVector &OutLocation);
 	void UpdateDestinationMarker();
 	void UpdateBlinkers();
+	void UpdateSpline(const TArray<FVector> &Path);
+
 	FVector2D GetBlinkerCentre();
 	
 	void StartFade(float FromAlpha, float ToAlpha);
@@ -53,6 +55,11 @@ private:
 
 	UPROPERTY()
 	class UMotionControllerComponent* RightController;
+
+
+	UPROPERTY(VisibleAnywhere)
+	class USplineComponent* TeleportPath;
+
 
 	UPROPERTY(VisibleAnywhere)
 	class UStaticMeshComponent* DestinationMarker;
