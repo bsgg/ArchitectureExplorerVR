@@ -59,6 +59,7 @@ void AVRCharacter::BeginPlay()
 		BlinkerMaterialInstance = UMaterialInstanceDynamic::Create(BlinkerMaterialBase, this);
 		PostProcessComponent->AddOrUpdateBlendable(BlinkerMaterialInstance);
 	}
+
 	
 }
 
@@ -178,7 +179,7 @@ void AVRCharacter::UpdateDestinationMarker()
 		DestinationMarker->SetVisibility(true);
 		DestinationMarker->SetWorldLocation(Location);
 
-		UpdateSpline(Path);
+		DrawTeleportPath(Path);
 	}
 	else
 	{
@@ -203,6 +204,30 @@ void AVRCharacter::UpdateBlinkers()
 	BlinkerMaterialInstance->SetVectorParameterValue(TEXT("Centre"), FLinearColor(Centre.X, Centre.Y, 0.0f));	
 }
 
+void AVRCharacter::DrawTeleportPath(const TArray<FVector> &Path)
+{
+	UpdateSpline(Path);
+
+	for (int32 i = 0; i < Path.Num(); ++i)
+	{
+		if (TeleportPathMeshPool.Num() <= i)
+		{
+
+			UStaticMeshComponent * DynamicMesh = NewObject<UStaticMeshComponent>(this);
+			DynamicMesh->AttachToComponent(VRRoot, FAttachmentTransformRules::KeepRelativeTransform);
+			DynamicMesh->SetStaticMesh(TeleportArchMesh);
+			DynamicMesh->SetMaterial(0, TeleportArchMaterial);
+			DynamicMesh->RegisterComponent();
+
+			TeleportPathMeshPool.Add(DynamicMesh);
+		}
+
+		UStaticMeshComponent * DynamicMesh = TeleportPathMeshPool[i];
+
+		DynamicMesh->SetWorldLocation(Path[i]);		
+	}
+}
+
 void AVRCharacter::UpdateSpline(const TArray<FVector> &Path)
 {
 	TeleportPath->ClearSplinePoints(false);
@@ -216,6 +241,8 @@ void AVRCharacter::UpdateSpline(const TArray<FVector> &Path)
 
 	TeleportPath->UpdateSpline();
 }
+
+
 
 
 FVector2D AVRCharacter::GetBlinkerCentre()
