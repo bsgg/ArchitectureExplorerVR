@@ -44,7 +44,7 @@ private:
 	
 	void StartFade(float FromAlpha, float ToAlpha);
 
-private:
+private: // Configuration Parameters
 
 	class USceneComponent* VRRoot;
 
@@ -52,10 +52,10 @@ private:
 	class UCameraComponent* Camera;
 
 	UPROPERTY()
-	class UMotionControllerComponent* LeftController;
+	class AHandController* LeftController;
 
 	UPROPERTY()
-	class UMotionControllerComponent* RightController;
+	class AHandController* RightController;
 
 
 	UPROPERTY(VisibleAnywhere)
@@ -79,6 +79,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	class UMaterialInterface* TeleportArchMaterial;
+
+	UPROPERTY(EditDefaultsOnly)
+	class TSubclassOf<AHandController> HandControllerClass;
 
 private:
 
