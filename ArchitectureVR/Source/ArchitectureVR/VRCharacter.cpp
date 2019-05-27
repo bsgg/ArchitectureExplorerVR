@@ -23,7 +23,7 @@
 // Sets default values
 AVRCharacter::AVRCharacter()
 {
-	VRRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));   
+	VRRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));    
 	VRRoot->SetupAttachment(GetRootComponent());
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
