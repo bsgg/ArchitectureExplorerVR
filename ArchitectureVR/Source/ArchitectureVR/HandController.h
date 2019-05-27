@@ -42,6 +42,11 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UMotionControllerComponent* MotionController;
 
+	// Parameters
+	UPROPERTY(EditDefaultsOnly)
+	class UHapticFeedbackEffect_Base* HapticEffect;
+
+
 	// State
 	bool bCanClimb = false;
 
