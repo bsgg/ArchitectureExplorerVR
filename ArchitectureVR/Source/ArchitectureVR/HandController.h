@@ -19,6 +19,9 @@ public:
 
 	void SetHand(FName Hand);
 
+	void Grip();
+	void Relsease();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -49,5 +52,8 @@ private:
 
 	// State
 	bool bCanClimb = false;
+	bool bIsClimbing = false;
+	FVector ClimbingStartLocation;
+
 
 };

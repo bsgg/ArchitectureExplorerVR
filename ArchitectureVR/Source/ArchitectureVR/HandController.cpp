@@ -74,6 +74,12 @@ void AHandController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (bIsClimbing)
+	{
+		FVector HandControllerDelta = GetActorLocation() - ClimbingStartLocation;
+		GetAttachParentActor()->AddActorWorldOffset(-HandControllerDelta);
+	}
+
 }
 
 void AHandController::SetHand(FName Hand)
@@ -84,3 +90,21 @@ void AHandController::SetHand(FName Hand)
 	}
 }
 
+
+
+void AHandController::Grip()
+{
+	if (!bCanClimb) return;
+
+	if (!bIsClimbing)
+	{
+		bIsClimbing = true;
+		ClimbingStartLocation = GetActorLocation();
+	}
+
+	
+}
+void AHandController::Relsease()
+{
+	bIsClimbing = false;
+}
