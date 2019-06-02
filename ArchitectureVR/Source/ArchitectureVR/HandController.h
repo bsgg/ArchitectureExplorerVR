@@ -18,6 +18,7 @@ public:
 	AHandController();
 
 	void SetHand(FName Hand);
+	void PairController(AHandController* Controller);
 
 	void Grip();
 	void Relsease();
@@ -55,5 +56,7 @@ private:
 	bool bIsClimbing = false;
 	FVector ClimbingStartLocation;
 
+
+	AHandController* OtherController;
 
 };

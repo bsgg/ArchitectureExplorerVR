@@ -56,18 +56,20 @@ void AVRCharacter::BeginPlay()
 	}
 
 	LeftController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
+	RightController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
 
 	if (LeftController != nullptr)
 	{
 		LeftController->AttachToComponent(VRRoot, FAttachmentTransformRules::KeepRelativeTransform);
 		LeftController->SetHand(FXRMotionControllerBase::LeftHandSourceId);
+		LeftController->PairController(RightController);
 	}
-
-	RightController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
+	
 	if (RightController != nullptr)
 	{
 		RightController->AttachToComponent(VRRoot, FAttachmentTransformRules::KeepRelativeTransform);
-		LeftController->SetHand(FXRMotionControllerBase::RightHandSourceId);
+		RightController->SetHand(FXRMotionControllerBase::RightHandSourceId);
+		RightController->PairController(LeftController);
 	}
 }
 

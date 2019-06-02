@@ -4,6 +4,8 @@
 #include "HandController.h"
 #include "GameFramework/PlayerController.h"
 #include "MotionControllerComponent.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 // Sets default values
@@ -78,6 +80,14 @@ void AHandController::Tick(float DeltaTime)
 	{
 		FVector HandControllerDelta = GetActorLocation() - ClimbingStartLocation;
 		GetAttachParentActor()->AddActorWorldOffset(-HandControllerDelta);
+
+		OtherController->bIsClimbing = false;
+
+		ACharacter* Character = Cast<ACharacter>(GetAttachParentActor());
+		if (Character != nullptr)
+		{
+			Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
+		}
 	}
 
 }
@@ -90,6 +100,11 @@ void AHandController::SetHand(FName Hand)
 	}
 }
 
+void AHandController::PairController(AHandController* Controller)
+{
+	OtherController = Controller;
+	OtherController->OtherController = this;
+}
 
 
 void AHandController::Grip()
@@ -106,5 +121,17 @@ void AHandController::Grip()
 }
 void AHandController::Relsease()
 {
-	bIsClimbing = false;
+
+	if (bIsClimbing)
+	{
+		bIsClimbing = false;
+
+		ACharacter* Character = Cast<ACharacter>(GetAttachParentActor());
+		if (Character != nullptr)
+		{
+			Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Falling);
+		}
+	}
+
+	
 }
